@@ -123,4 +123,33 @@ def logarithmic(n):
 
 logarithmic(8)
 """
-# Next Class: Exponential & Factorial Time complexity examples, Quiz on time complexity, Space Complexity
+# Exponential - O(2^n)
+# Fibonacci Sequence Program
+
+# Factorial Time complexity - O(n!)
+"""
+def factorial(n):
+    if n == 0:
+        print("*")
+        return
+    for i in range(n):
+        factorial(n-1)
+
+factorial(3)
+"""
+# Quiz on time complexity, Space Complexity
+
+
+
+# Recursion Skill Test
+def bar(x, y):
+    if y == 0:
+        return 0
+    return (x + bar(x, y-1))
+
+def foo(x, y):
+    if y == 0:
+        return 1
+    return bar(x, foo(x, y-1))
+
+print(foo(3, 5))
