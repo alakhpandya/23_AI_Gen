@@ -27,6 +27,8 @@ else:
 """
 1. BFS is Complete.
 2. BFS is Optimal provided that all edges have equal weights.
+3. Time Complexity: O(b^d); b = branching factor, d = depth of goal state
+4. Space Complexity: O(b^d)
 """
 """
 1. Completeness: Is it guaranteed that you will always find the goal state if goal state exists.

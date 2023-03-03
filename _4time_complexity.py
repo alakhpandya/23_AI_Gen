@@ -142,6 +142,7 @@ factorial(3)
 
 
 # Recursion Skill Test
+"""
 def bar(x, y):
     if y == 0:
         return 0
@@ -153,3 +154,42 @@ def foo(x, y):
     return bar(x, foo(x, y-1))
 
 print(foo(3, 5))
+"""
+
+# Space Complexity:
+"""
+def countDown(n):
+    print(n)
+    if n == 0:
+        return 1
+    return countDown(n-1) * 1
+
+# Space Complexity: O(n)
+
+countDown(5)
+"""
+# Function - 1
+def twoLoops(n):
+    for i in range(n):
+        pass
+    for j in range(n):
+        pass
+    
+
+# Function - 2
+def twoInputs(a, b):
+    for i in range(a):
+        pass             
+    for j in range(b):
+        pass             
+
+
+# Function - 3
+def twoInputs(a, b):
+    for i in range(a):
+        pass
+        for j in range(b):
+            pass
+
+
+# Next Class: 4 properties of bfs, dfs, their advantages & disadvantages & solutions
