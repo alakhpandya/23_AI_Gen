@@ -29,7 +29,7 @@ class Node():
         self.col = col
         self.x = col * width
         self.y = row * width
-        self.color = RED
+        self.color = WHITE
         self.neighbors = []
         self.width = width
         self.total_rows = total_rows
@@ -38,7 +38,76 @@ class Node():
         pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.width))
 
     # Type A: Changing colors of the node   def make_black: self.color = black
+    def make_red(self):
+        self.color = RED
+
+    def make_green(self):
+        self.color = GREEN
+
+    def make_blue(self):
+        self.color = BLUE
+
+    def make_orange(self):
+        self.color = ORANGE
+
+    def make_yellow(self):
+        self.color = YELLOW
+
+    def make_black(self):
+        self.color = BLACK
+
+    def make_white(self):
+        self.color = WHITE
+
+    def make_aqua(self):
+        self.color = AQUA
+
+    def make_grey(self):
+        self.color = GREY
+
+    def make_purple(self):
+        self.color = PURPLE
+
     # Type B: Checking color of the node    def is_black: return self.color == black
+    def is_red(self):
+        return self.color == RED
+
+    def is_green(self):
+        return self.color == GREEN
+
+    def is_blue(self):
+        return self.color == BLUE
+
+    def is_orange(self):
+        return self.color == ORANGE
+
+    def is_yellow(self):
+        return self.color == YELLOW
+
+    def is_black(self):
+        return self.color == BLACK
+
+    def is_white(self):
+        return self.color == WHITE
+
+    def is_aqua(self):
+        return self.color == AQUA
+
+    def is_grey(self):
+        return self.color == GREY
+
+    def is_purple(self):
+        return self.color == PURPLE
+    
+    def make_start_node(self):
+        self.color = ORANGE
+
+    def make_goal_node(self):
+        self.color = AQUA
+
+    def make_barrier(self):
+        self.color = BLACK
+
 
 def make_grid(rows, width):
     grid = []
@@ -68,6 +137,13 @@ def draw(window, grid, rows, width):
     draw_grid(window, rows, width)
     pygame.display.update()
 
+def get_click_pos(pos, rows, width):
+    node_width = width // rows
+    x, y = pos
+    row = y // node_width
+    col = x // node_width
+    return row, col
+
 def main(width, window):
     ROWS = 8
     grid = make_grid(ROWS, width)
@@ -77,8 +153,36 @@ def main(width, window):
     running = True
     started = False
 
-    while True:
+    while running:
         draw(window, grid, ROWS, width)
+        for event in pygame.event.get():
+            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                running = False
+            if started:
+                continue
+            if pygame.mouse.get_pressed()[0]:
+                pos = pygame.mouse.get_pos()
+                row, col = get_click_pos(pos, ROWS, width)
+                node = grid[row][col]
+                if not start and node != end:
+                    start = node
+                    node.make_start_node()
+                elif not end and node != start:
+                    end = node
+                    node.make_goal_node()
+                elif node != start and node != end:
+                    node.make_barrier()
+            if pygame.mouse.get_pressed()[2]:
+                pos = pygame.mouse.get_pos()
+                row, col = get_click_pos(pos, ROWS, width)
+                node = grid[row][col]
+                if node == start:
+                    start = None
+                elif node == end:
+                    end = None
+                node.make_white()
+                
+
 
 # Main Program
 main(WIDTH, WINDOW)
