@@ -5,7 +5,7 @@ from queue import PriorityQueue
 
 
 # Constants / Global Variables Area
-WIDTH = 600     # input from user
+WIDTH = 700     # input from user
 # HEIGHT
 WINDOW = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.display.set_caption("A* Algorithm Visualization")
@@ -38,7 +38,7 @@ class Node():
         pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.width))
 
     # Type A: Changing colors of the node   def make_black: self.color = black
-    def make_red(self):
+    def make_open(self):
         self.color = RED
 
     def make_green(self):
@@ -47,29 +47,29 @@ class Node():
     def make_blue(self):
         self.color = BLUE
 
-    def make_orange(self):
+    def make_start_node(self):
         self.color = ORANGE
 
     def make_yellow(self):
         self.color = YELLOW
 
-    def make_black(self):
+    def make_barrier(self):
         self.color = BLACK
 
-    def make_white(self):
+    def clear(self):
         self.color = WHITE
 
-    def make_aqua(self):
+    def make_goal_node(self):
         self.color = AQUA
 
     def make_grey(self):
         self.color = GREY
 
-    def make_purple(self):
+    def make_path(self):
         self.color = PURPLE
 
     # Type B: Checking color of the node    def is_black: return self.color == black
-    def is_red(self):
+    def is_open(self):
         return self.color == RED
 
     def is_green(self):
@@ -78,36 +78,54 @@ class Node():
     def is_blue(self):
         return self.color == BLUE
 
-    def is_orange(self):
+    def is_start_node(self):
         return self.color == ORANGE
 
     def is_yellow(self):
         return self.color == YELLOW
 
-    def is_black(self):
+    def is_barrier(self):
         return self.color == BLACK
 
     def is_white(self):
         return self.color == WHITE
 
-    def is_aqua(self):
+    def is_goal_node(self):
         return self.color == AQUA
 
     def is_grey(self):
         return self.color == GREY
 
-    def is_purple(self):
+    def is_path(self):
         return self.color == PURPLE
     
-    def make_start_node(self):
-        self.color = ORANGE
-
-    def make_goal_node(self):
-        self.color = AQUA
-
-    def make_barrier(self):
-        self.color = BLACK
-
+    def generate_neighbors(self, grid):
+        # look up:
+        if self.row > 0:
+            node = grid[self.row - 1][self.col]
+            if not node.is_barrier():
+                self.neighbors.append(node)
+    
+        # look down:
+        if self.row < self.total_rows - 1:
+            node = grid[self.row + 1][self.col]
+            if not node.is_barrier():
+                self.neighbors.append(node)
+    
+        # look left:
+        if self.col > 0:
+            node = grid[self.row][self.col - 1]
+            if not node.is_barrier():
+                self.neighbors.append(node)
+    
+        # look right:
+        if self.col < self.total_rows - 1:
+            node = grid[self.row][self.col + 1]
+            if not node.is_barrier():
+                self.neighbors.append(node)
+    
+    def get_node_position(self):
+        return self.row, self.col
 
 def make_grid(rows, width):
     grid = []
@@ -144,9 +162,69 @@ def get_click_pos(pos, rows, width):
     col = x // node_width
     return row, col
 
+def create_path(window, grid, rows, width, backtrack, node):
+    print(backtrack)
+    while node in backtrack:
+        node = backtrack[node]
+        node.make_path()
+        print("loop started.")
+        print("loop exit done.")
+        draw(window, grid, rows, width)
+
+def h(node_position, goal_position):
+    node_x, node_y = node_position
+    goal_x, goal_y = goal_position
+    return abs(goal_x - node_x) + abs(goal_y - node_y)
+
+def aStar_algo(window, rows, width, grid, start, end):
+    # print("A-Star Started...")
+    open = PriorityQueue()
+    order = 0
+
+    backtrack = {}
+    g_values = {}
+    f_values = {}
+    for row in grid:
+        for node in row:
+            g_values[node] = float("inf")
+            f_values[node] = float("inf")
+    g_values[start] = 0
+    f_values[start] = h(start.get_node_position(), end.get_node_position())
+    
+    open.put((f_values[start], f_values[start], order, start))
+
+    open_simplified = {start}
+    while not open.empty():
+        for event in pygame.event.get():
+            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                pygame.quit()
+        node = open.get()[3]
+
+        if node == end:
+            create_path(window, grid, rows, width, backtrack, end)
+            end.make_goal_node()
+            return True
+        
+        for neighbor in node.neighbors:
+            g_values[neighbor] = g_values[node] + 1
+            h_value = h(neighbor.get_node_position(), end.get_node_position())
+            f_values[neighbor] = g_values[neighbor] + h_value
+            backtrack[neighbor] = node
+
+            if neighbor not in open_simplified:
+                open_simplified.add(neighbor)
+                order += 1
+                open.put((f_values[neighbor], h_value, order, neighbor))
+                neighbor.make_open()
+
+        draw(window, grid, rows, width)
+
+    return False
+
 def main(width, window):
-    ROWS = 8
+    ROWS = 5
     grid = make_grid(ROWS, width)
+    
     start = None
     end = None
 
@@ -160,7 +238,7 @@ def main(width, window):
                 running = False
             if started:
                 continue
-            if pygame.mouse.get_pressed()[0]:
+            if pygame.mouse.get_pressed()[0]:       # left clicked
                 pos = pygame.mouse.get_pos()
                 row, col = get_click_pos(pos, ROWS, width)
                 node = grid[row][col]
@@ -172,7 +250,8 @@ def main(width, window):
                     node.make_goal_node()
                 elif node != start and node != end:
                     node.make_barrier()
-            if pygame.mouse.get_pressed()[2]:
+
+            if pygame.mouse.get_pressed()[2]:       # right clicked
                 pos = pygame.mouse.get_pos()
                 row, col = get_click_pos(pos, ROWS, width)
                 node = grid[row][col]
@@ -180,9 +259,17 @@ def main(width, window):
                     start = None
                 elif node == end:
                     end = None
-                node.make_white()
+                node.clear()
                 
+            if event.type == KEYDOWN:
+                started = True
+                if event.key == K_SPACE and start and end:
+                    for row in grid:
+                        for node in row:
+                            node.generate_neighbors(grid)
+                aStar_algo(window, ROWS, width, grid, start, end)
 
+    pygame.quit()
 
 # Main Program
 main(WIDTH, WINDOW)
