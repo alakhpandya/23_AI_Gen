@@ -162,13 +162,10 @@ def get_click_pos(pos, rows, width):
     col = x // node_width
     return row, col
 
-def create_path(window, grid, rows, width, backtrack, node):
-    print(backtrack)
-    while node in backtrack:
-        node = backtrack[node]
-        node.make_path()
-        print("loop started.")
-        print("loop exit done.")
+def create_path(window, grid, rows, width, backtrack, current):
+    while current in backtrack:
+        current.make_path()
+        current = backtrack[current]
         draw(window, grid, rows, width)
 
 def h(node_position, goal_position):
@@ -200,29 +197,33 @@ def aStar_algo(window, rows, width, grid, start, end):
                 pygame.quit()
         node = open.get()[3]
 
+        
         if node == end:
             create_path(window, grid, rows, width, backtrack, end)
             end.make_goal_node()
             return True
         
         for neighbor in node.neighbors:
-            g_values[neighbor] = g_values[node] + 1
-            h_value = h(neighbor.get_node_position(), end.get_node_position())
-            f_values[neighbor] = g_values[neighbor] + h_value
-            backtrack[neighbor] = node
+            g_values_temp = g_values[node] + 1
 
-            if neighbor not in open_simplified:
-                open_simplified.add(neighbor)
-                order += 1
-                open.put((f_values[neighbor], h_value, order, neighbor))
-                neighbor.make_open()
+            if g_values_temp < g_values[neighbor]:
+                g_values[neighbor] = g_values_temp
+                h_value = h(neighbor.get_node_position(), end.get_node_position())
+                f_values[neighbor] = g_values[neighbor] + h_value
+                backtrack[neighbor] = node
+                
+                if neighbor not in open_simplified:
+                    open_simplified.add(neighbor)
+                    order += 1
+                    open.put((f_values[neighbor], h_value, order, neighbor))
+                    neighbor.make_open()
 
         draw(window, grid, rows, width)
 
     return False
 
 def main(width, window):
-    ROWS = 5
+    ROWS = 10
     grid = make_grid(ROWS, width)
     
     start = None
