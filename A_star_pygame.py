@@ -2,7 +2,7 @@
 import pygame
 from pygame.locals import *
 from queue import PriorityQueue
-
+# from all_algorithms import a_star as algo
 
 # Constants / Global Variables Area
 WIDTH = 700     # input from user
@@ -269,6 +269,7 @@ def main(width, window):
                         for node in row:
                             node.generate_neighbors(grid)
                 aStar_algo(window, ROWS, width, grid, start, end)
+                # algo()
 
     pygame.quit()
 
