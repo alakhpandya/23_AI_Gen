@@ -51,9 +51,20 @@ mat1 = np.mat(a)
 # print(mat1)
 # print(mat1.dtype)
 # print(isinstance(mat1, np.matrix))
-# print(isinstance(a, np.matrix))
-# print(isinstance(a, np.array))
+# print(isinstance(mat1, np.ndarray))
 
-a[0] = 5
-print(a)
-# Next Class: matrix is the subclass of arrays not the reverse is true.
+# print(isinstance(a, np.ndarray))
+# print(isinstance(a, np.matrix))
+
+# a[0] = 5
+# print(a)
+
+# class A:
+#     pass
+
+# class B(A):
+#     pass
+
+# print(issubclass(B, A))
+
+print(issubclass(np.matrix, np.ndarray))
