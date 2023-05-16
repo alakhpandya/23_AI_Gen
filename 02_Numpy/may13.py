@@ -122,7 +122,7 @@ a[1:4, 1:4] = b
 # print(b)
 print(a)
 """
-
+"""
 a = np.array([
     [1,2,3,4,5],
     [6,7,8,9,10],
@@ -142,3 +142,4 @@ b = np.arange(1, 26)
 # print(b)
 b = b.reshape((5, 5))
 print(b)
+"""
