@@ -223,7 +223,7 @@ def aStar_algo(window, rows, width, grid, start, end):
     return False
 
 def main(width, window):
-    ROWS = 10
+    ROWS = 50
     grid = make_grid(ROWS, width)
     
     start = None
