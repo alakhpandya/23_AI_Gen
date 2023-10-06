@@ -1,0 +1,27 @@
+movie_id,title,industry,release_year,imdb_rating,studio,language_id
+107,"Dilwale Dulhania Le Jayenge",Bollywood,1995,8.0,"Yash Raj Films",1
+115,"The Pursuit of Happyness",Hollywood,2006,8.0,"Columbia Pictures",5
+133,RRR,Bollywood,2022,8.0,"DVV Entertainment",2
+134,"Baahubali: The Beginning",Bollywood,2015,8.0,"Arka Media Works",2
+106,Sholay,Bollywood,1975,8.1,"United Producers",1
+129,"Munna Bhai M.B.B.S.",Bollywood,2003,8.1,"Vinod Chopra Productions",1
+130,PK,Bollywood,2014,8.1,"Vinod Chopra Films",1
+136,"Bajrangi Bhaijaan",Bollywood,2015,8.1,"Salman Khan Films",1
+123,"Jurassic Park",Hollywood,1993,8.2,"Universal Pictures",5
+127,"Pather Panchali",Bollywood,1955,8.3,"Government of West Bengal",7
+128,"Taare Zameen Par",Bollywood,2007,8.3,,1
+135,"The Kashmir Files",Bollywood,2022,8.3,"Zee Studios",1
+101,"K.G.F: Chapter 2",Bollywood,2022,8.4,"Hombale Films",3
+108,"3 Idiots",Bollywood,2009,8.4,"Vinod Chopra Films",1
+125,"Avengers: Endgame",Hollywood,2019,8.4,"Marvel Studios",5
+126,"Avengers: Infinity War",Hollywood,2018,8.4,"Marvel Studios",5
+140,Shershaah,Bollywood,2021,8.4,"Dharma Productions",1
+116,Gladiator,Hollywood,2000,8.5,"Universal Pictures  ",5
+124,Parasite,Hollywood,2019,8.5,,5
+113,Interstellar,Hollywood,2014,8.6,"Warner Bros. Pictures",5
+118,"It's a Wonderful Life",Hollywood,1946,8.6,"Liberty Films",5
+112,Inception,Hollywood,2010,8.8,"Warner Bros. Pictures",5
+121,"The Dark Knight",Hollywood,2008,9.0,Syncopy,5
+122,"Schindler's List",Hollywood,1993,9.0,"Universal Pictures",5
+120,"The Godfather",Hollywood,1972,9.2,"Paramount Pictures",5
+111,"The Shawshank Redemption",Hollywood,1994,9.3,"Castle Rock Entertainment",5
