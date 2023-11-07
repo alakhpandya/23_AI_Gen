@@ -33,8 +33,11 @@ alter table employee drop column supervisor;
 alter table employee drop column salary;
 
 select * from employees
-union
+union all
 select * from employee;
 
 use hr;
 select * from employees;
+
+insert into employees values(2, 'Dan');
+
