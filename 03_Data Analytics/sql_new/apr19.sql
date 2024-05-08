@@ -44,6 +44,8 @@ group by industry;
 -- Print the number of movies each studio has produced
 select studio, count(movie_id) as no_of_movies
 from movies
+where studio != ""
 group by studio
+-- having studio != ""
 order by 2 desc
 limit 3;
