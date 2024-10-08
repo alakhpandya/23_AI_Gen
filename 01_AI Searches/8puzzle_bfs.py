@@ -134,7 +134,7 @@ def BFS(start,end):
                 queue.append(child)
                 visited.append(child)
                 # g_value[tuple(child)] = g_values
-                backtrack[tuple(node)] = child
+                # backtrack[tuple(node)] = child
     return False
         
 # print(a_start_algo(start,end))
